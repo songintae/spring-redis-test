@@ -14,8 +14,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class EmbeddedKafkaCondition implements ExecutionCondition, AfterAllCallback, ParameterResolver {
-    private static final Logger logger = LoggerFactory.getLogger(EmbeddedKafkaCondition.class);
+public class EmbeddedRedisCondition implements ExecutionCondition, AfterAllCallback, ParameterResolver {
+    private static final Logger logger = LoggerFactory.getLogger(EmbeddedRedisCondition.class);
     private static final String EMBEDDED_REDIS = "embedded-redis";
     private static final ThreadLocal<EmbeddedRedisServer> REDIS = new ThreadLocal<>();
 
@@ -58,7 +58,7 @@ public class EmbeddedKafkaCondition implements ExecutionCondition, AfterAllCallb
         if (element.isPresent() && !springTestContext(element.get())) {
 
             EmbeddedRedis embedded = AnnotatedElementUtils.findMergedAnnotation(element.get(), EmbeddedRedis.class);
-            // When running in a spring test context, the EmbeddedKafkaContextCustomizer will create the broker.
+            // When running in a spring test context, the EmbeddedRedisContextCustomizer will create the broker.
             if (embedded != null) {
                 EmbeddedRedisServer redis = getRedisFromStore(context);
                 if (redis == null) {
